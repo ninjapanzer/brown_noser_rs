@@ -1,0 +1,3 @@
+[submodule "github-rust"]
+	path = github-rust
+	url = git@github.com:ninjapanzer/github-rust.git
