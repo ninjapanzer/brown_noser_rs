@@ -5,7 +5,7 @@ extern crate github;
 use github::Client;
 use github::error::*;
 use github::activity::events::*;
-use github::pull_requests;
+use github::pull_requests::*;
 
 fn main() {
   let client = &Client::new("ninjapanzer");
@@ -29,9 +29,17 @@ fn main() {
     }
   }
 
-  match list_pulls(client, "ninjapanzer", "github-rust"){
-    OK(thing) => {
-      println!("{}", thing);
-    }
+  match list_pulls(client, "WCCCEDU", "CPT-180-27-Assignment-5-Structures"){
+    Ok(thing) => {
+      println!("{:?}", thing);
+    },
+    Err(err) => {
+      println!("list_pulls => {:?}", err);
+      if let ClientError::Http(http_error) = err {
+        for error in http_error.errors {
+          println!("    {}", error);
+        }
+      }
+    },
   }
 }
